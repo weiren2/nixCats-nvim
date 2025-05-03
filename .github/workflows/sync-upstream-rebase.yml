@@ -1,0 +1,37 @@
+name: Sync with Upstream and Rebase Branches
+on:
+  workflow_dispatch: # allows manual triggering
+  schedule:
+    - cron: '17 2,14 * * *'
+
+env:
+  UPSTREAM: https://github.com/BirdeeHub/nixCats-nvim.git
+  CUSTOM_BRANCH: lazyvim
+
+jobs:
+  sync_upstream:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout main branch
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Configure git
+        run: |
+          git config --global user.name "${{ env.GIT_USER_NAME }}"
+          git config --global user.email "${{ env.GIT_USER_EMAIL }}"
+
+      - name: Fetch and sync with upstream
+        run: |
+          git remote add upstream "${{ env.UPSTREAM }}"
+          git fetch upstream
+          git rebase upstream/main
+          git push --force-with-lease origin main
+
+      - name: Rebase custom branch
+        run: |
+          git checkout "${{ env.CUSTOM_BRANCH }}"
+          git rebase origin/main
+          git push --force-with-lease origin "${{ env.CUSTOM_BRANCH }}"
