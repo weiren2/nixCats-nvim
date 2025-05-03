@@ -32,6 +32,6 @@ jobs:
 
       - name: Rebase custom branch
         run: |
-          git checkout "${{ env.CUSTOM_BRANCH }}"
+          git checkout ${{ env.CUSTOM_BRANCH }}
           git rebase origin/main
-          git push --force-with-lease origin "${{ env.CUSTOM_BRANCH }}"
+          git push --force-with-lease origin ${{ env.CUSTOM_BRANCH }}
