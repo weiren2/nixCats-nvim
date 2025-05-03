@@ -1,9 +1,10 @@
-name: Sync with upstream and rebase custom branch
+name: Sync with Upstream and Rebase Branches
 on:
+  workflow_dispatch: # allows manual triggering
   schedule:
     # actually, ~5 minutes is the highest
     # effective frequency you will get
-    - cron: '* * * * *'
+    - cron: '17 23 * * *'
 
 env:
   CUSTOM_BRANCH: lazyvim-custom
