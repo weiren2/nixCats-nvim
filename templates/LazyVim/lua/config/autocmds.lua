@@ -8,6 +8,7 @@
 -- e.g. vim.api.nvim_del_augroup_by_name("lazyvim_wrap_spell")
 
 vim.api.nvim_create_autocmd("VimLeave", {
+    group = vim.api.nvim_create_augroup("cursor_reset", { clear = true }),
     pattern = "*",
     command = 'silent !echo -ne "\\e[6 q"',
 })
